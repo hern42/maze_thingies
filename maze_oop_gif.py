@@ -74,7 +74,7 @@ class Maze():
                 else: print('+--', sep='', end='')
             print('+')
 
-    def showMazeImg(self):
+    def MazeGIF(self):
         frames = []
         laby_image = Image.new('RGB', (self.width * 5, self.height * 5),
                                'black')
@@ -182,4 +182,4 @@ if __name__ == '__main__':
     laby.showMazeASCII()
 
     # show image
-    laby.showMazeImg()
+    laby.MazeGIF()
