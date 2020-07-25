@@ -75,11 +75,12 @@ class Maze():
             print('+')
 
     def showMazeImg(self):
+        final_image = []
         laby_image = Image.new('RGB', (self.width * 5, self.height * 5),
                                'white')
+        final_image.append(laby_image)
 
         pixels = laby_image.load()
-
         for i in range(len(self.visited)):
             sx = self.visited[i].x
             sy = self.visited[i].y
@@ -104,13 +105,14 @@ class Maze():
                 else:
                     pixels[sx * 5, sy * 5 + j] = wall_color
 
+                for k in range(1,4):
+                    pixels[sx * 5 + k, sy * 5 + j] = visited_color
+
                 if not self.visited[i].E:
                     pixels[sx * 5 + 4, sy * 5 + j] = visited_color
                 else:
                     pixels[sx * 5 + 4, sy * 5 + j] = wall_color
 
-                for k in range(1,4):
-                    pixels[sx * 5 + k, sy * 5 + j] = visited_color
 
             # last (5th) line (check if South wall is open)
             if not self.visited[i].S:

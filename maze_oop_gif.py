@@ -165,7 +165,7 @@ class Cell():
 
 
 if __name__ == '__main__':
-    laby = Maze(26,11)
+    laby = Maze(26, 11)
     laby.makeMaze()
 
     # list all cells with walls
