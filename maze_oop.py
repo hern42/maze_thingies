@@ -7,6 +7,7 @@
 # and wikipedia: https://en.wikipedia.org/wiki/Maze_generation_algorithm
 
 from random import randint, shuffle
+from PIL import Image
 
 class Maze():
     def __init__(self, width, height):
@@ -73,6 +74,56 @@ class Maze():
                 else: print('+--', sep='', end='')
             print('+')
 
+    def showMazeImg(self):
+        laby_image = Image.new('RGB', (self.width * 5, self.height * 5),
+                               'white')
+
+        pixels = laby_image.load()
+
+        for i in range(len(self.visited)):
+            sx = self.visited[i].x
+            sy = self.visited[i].y
+            wall_color = (0, 0, 0)
+            visited_color = (255, 255, 255)
+
+            # first line of the sprite (check if North wall is open)
+            if not self.visited[i].N:
+                pixels[sx * 5, sy * 5] = wall_color
+                for k in range(1,4):
+                    pixels[sx * 5 + k, sy * 5] = visited_color
+                pixels[sx * 5 + 4, sy * 5] = wall_color
+            else:
+                for k in range(5):
+                    pixels[sx * 5 + k, sy * 5] = wall_color
+
+            # lines 2, 3 and 4 of the sprite (check if East and West walls are
+            # open)
+            for j in range(1,4):
+                if not self.visited[i].W:
+                    pixels[sx * 5, sy * 5 + j] = visited_color
+                else:
+                    pixels[sx * 5, sy * 5 + j] = wall_color
+
+                if not self.visited[i].E:
+                    pixels[sx * 5 + 4, sy * 5 + j] = visited_color
+                else:
+                    pixels[sx * 5 + 4, sy * 5 + j] = wall_color
+
+                for k in range(1,4):
+                    pixels[sx * 5 + k, sy * 5 + j] = visited_color
+
+            # last (5th) line (check if South wall is open)
+            if not self.visited[i].S:
+                pixels[sx * 5, sy * 5 + 4] = wall_color
+                for k in range(1,4):
+                    pixels[sx * 5 + k, sy * 5 + 4] = visited_color
+                pixels[sx * 5 + 4, sy * 5 + 4] = wall_color
+            else:
+                for k in range(5):
+                    pixels[sx * 5 + k, sy * 5 + 4] = wall_color
+
+        laby_image.show()
+
 
 class Cell():
     def __init__(self, x, y):
@@ -112,5 +163,9 @@ if __name__ == '__main__':
     for i in range(laby.width):
         for j in range(laby.height):
             laby.maze[i][j].showCell()
+
     # print in ascii
     laby.showMazeASCII()
+
+    # show image
+    laby.showMazeImg()
