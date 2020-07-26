@@ -18,11 +18,11 @@ class Maze():
         self.maze = [[Cell(i,j) for j in range(self.height)] for i in
                      range(self.width)]
 
-    def add2Stack(self, x, y):
+    def add2stack(self, x, y):
         self.stack.append(self.maze[x][y])
         self.visited.append(self.maze[x][y])
 
-    def next2Stack(self):
+    def next2stack(self):
         exit = False
         while not exit:
             dead_end = False
@@ -44,11 +44,11 @@ class Maze():
                     # we check if the next cell is already in the stack
                     if self.maze[newx][newy] not in self.visited:
                         # we update the walls, cell we're coming from
-                        self.maze[self.stack[-1].x][self.stack[-1].y].digWall(fromwall)
+                        self.maze[self.stack[-1].x][self.stack[-1].y].dig_wall(fromwall)
                         # and cell we're going to
-                        self.maze[newx][newy].digWall(towall)
+                        self.maze[newx][newy].dig_wall(towall)
                         #we had the new cell in the stack
-                        self.add2Stack(newx, newy)
+                        self.add2stack(newx, newy)
                         exit, dead_end = True, True
                     else:
                         deadend += 1
@@ -57,12 +57,12 @@ class Maze():
                     self.stack.pop()
                     exit, dead_end = True, True
 
-    def makeMaze(self):
-        self.add2Stack(randint(0, self.width - 1),randint(0, self.height - 1))
+    def make_maze(self):
+        self.add2stack(randint(0, self.width - 1),randint(0, self.height - 1))
         while self.stack:
-            self.next2Stack()
+            self.next2stack()
 
-    def showMazeASCII(self):
+    def show_maze_ASCII(self):
         print('+--' * self.width, '+', sep='')
         for j in range(self.height):
             for i in range(self.width):
@@ -74,7 +74,7 @@ class Maze():
                 else: print('+--', sep='', end='')
             print('+')
 
-    def showMazeImg(self):
+    def show_maze_JPEG(self):
         final_image = []
         laby_image = Image.new('RGB', (self.width * 5, self.height * 5),
                                'white')
@@ -136,7 +136,7 @@ class Cell():
         self.W = True
         self.E = True
 
-    def showCell(self):
+    def show_cell(self):
         if self.N: walln = 'N'
         else: walln = '.'
         if self.S: walls = 'S'
@@ -149,7 +149,7 @@ class Cell():
                                                       walln, walls, walle,
                                                       wallw))
 
-    def digWall(self, wall):
+    def dig_wall(self, wall):
         # wall = N, S, E or W
         if wall == 'N': self.N = False
         if wall == 'S': self.S = False
@@ -159,15 +159,15 @@ class Cell():
 
 if __name__ == '__main__':
     laby = Maze(26,11)
-    laby.makeMaze()
+    laby.make_maze()
 
     # list all cells with walls
     for i in range(laby.width):
         for j in range(laby.height):
-            laby.maze[i][j].showCell()
+            laby.maze[i][j].show_cell()
 
     # print in ascii
-    laby.showMazeASCII()
+    laby.show_maze_ASCII()
 
     # show image
-    laby.showMazeImg()
+    laby.show_maze_JPEG()
