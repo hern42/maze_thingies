@@ -44,9 +44,9 @@ class Maze():
                     # we check if the next cell is already in the stack
                     if self.maze[newx][newy] not in self.visited:
                         # we update the walls, cell we're coming from
-                        self.maze[self.stack[-1].x][self.stack[-1].y].digWall(fromwall)
+                        self.maze[self.stack[-1].x][self.stack[-1].y].dig_wall(fromwall)
                         # and cell we're going to
-                        self.maze[newx][newy].digwall(towall)
+                        self.maze[newx][newy].dig_wall(towall)
                         #we had the new cell in the stack
                         self.add2stack(newx, newy)
                         exit, dead_end = True, True
