@@ -45,10 +45,10 @@ class Maze():
                     if self.maze[newx][newy] not in self.visited:
                         # we update the walls, cell we're coming from
                         self.maze[self.stack[-1].x][self.stack[-1].y].dig_wall(fromwall)
-                        self.maze[self.stack[-1].x][self.stack[-1].y].make_sprite((255,255,255), image)
+                        self.maze[self.stack[-1].x][self.stack[-1].y].make_sprite((153, 255, 153), image)
                         # and cell we're going to
                         self.maze[newx][newy].dig_wall(towall)
-                        self.maze[newx][newy].make_sprite((255,255,255), image)
+                        self.maze[newx][newy].make_sprite((153, 255, 153), image)
                         #we had the new cell in the stack
                         self.add2stack(newx, newy)
                         exit, dead_end = True, True
@@ -56,9 +56,11 @@ class Maze():
                         deadend += 1
                 if deadend >= 4:
                     # dead_end > 4 therefore dead end we remove the cell from the stack
-                    if self.stack: self.maze[self.stack[-1].x][self.stack[-1].y].make_sprite((255,0,0), image)
+                    if self.stack:
+                        self.maze[self.stack[-1].x][self.stack[-1].y].make_sprite((255,255,255), image)
                     self.stack.pop()
-                    if self.stack: self.maze[self.stack[-1].x][self.stack[-1].y].make_sprite((255,0,0), image)
+                    if self.stack:
+                        self.maze[self.stack[-1].x][self.stack[-1].y].make_sprite((255,255,255), image)
                     exit, dead_end = True, True
 
         return image
@@ -78,6 +80,7 @@ class Maze():
                        save_all=True, append_images=frames[1:], optimize=False,
                        duration=100, loop=0)
         frames[-1].save('laby_bis.jpg', format='JPEG')
+
 
 class Cell():
     def __init__(self, x, y):
@@ -144,10 +147,6 @@ class Cell():
             pixels[sx * 5 + 4, sy *5 + 4] = wall_color
         else:
             for i in range(5): pixels[sx * 5 + i, sy * 5 + 4] = wall_color
-
-
-
-
 
 
 if __name__ == '__main__':
